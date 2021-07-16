@@ -134,8 +134,19 @@ def negativeConversion(midi: int, key: str) -> int:
     pitch, octave = Converters.freq2pitch(freq=freq, accidental=accidental)
     tones: dict = Tones.getKeyTones(key=key)
     negativeTones: dict = Tones.getNegativeTones(keyTone=tones)
+    try:
+        negativePitch: str = f"{negativeTones[pitch]}{octave}"
+    except:
+        logger.info(f"{pitch} not in | {negativeTones} ")
+        logger.info(f" Enharmonic Substitution Needed")
 
-    negativePitch: str = f"{negativeTones[pitch]}{octave}"
+        if '#' in pitch:
+            pitch = Scales.chromaticScaleFlat()[Scales.chromaticScaleSharp().index(pitch)]
+        else:
+            pitch = Scales.chromaticScaleSharp()[Scales.chromaticScaleFlat().index(pitch)]
+
+        negativePitch: str = f"{negativeTones[pitch]}{octave}"
+
 
     return Converters.pitch2midi(pitch=negativePitch)
 

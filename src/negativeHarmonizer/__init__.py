@@ -14,3 +14,4 @@ logging.basicConfig(
 logger = logging.getLogger('NegHarm-Log')
 
 from negativeHarmonizer.pitch import * 
+from negativeHarmonizer.converter import *
