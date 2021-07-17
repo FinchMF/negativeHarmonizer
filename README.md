@@ -46,17 +46,17 @@ The application takes a midi file as input, then converts the entire midi into a
 #
 Currently this is a command-line tool
 
-    python3.7 src/generateNegatives.py <input midi file> <name you wish to call the output>
+    python3.7 src/generateNegatives.py -i{input midi file} -o{output midi file name} -n=1 -k=None
 
-Two Things to Note:
-- If your negative output has rhythmic glitches, rerun the command adding a third argument, 0
+Things to Note:
+- If your negative output has rhythmic glitches, rerun the command changing -n to 0
 - When naming the output file, no need to add midi extenstion .mid - it is handled for you
 
-#### Example of Adding Third Argument to Command
+### About the Arguements
 #
+The first two arguments are i/o, however the additional two arguments handle how note data us processed and what key the transformative axix is chosen from. 
 
-    python3.7 src/generateNegatives.py <input midi file> <name you wish to call the output> <0>
-#### What Happening with the Third Argument, 0
-#
+n is default 1, meaning that the logic only focuses on midi messages indicating note_on, when n is set to 0, the logic will handle both note_on and note_off midi messages. 
 
-By adding the 0, you are directing the application logic to detect when a midi message contains 'note_off' information. Depending on the midi file, sometimes this is needed in order to keep the piece's note lengths, thus rhythmic structure, in tact. Other files do not need this, so the application is set to default focus on only 'note_on' midi data for a pitch.  
+k is default None, meaning that the logic will look for the key in the midi file. If the midi file does not contain data about the key, then the key of C is chosen by default. Setting the key will override what key is in the midi file, as well as override the default C if no key is in the midi file. 
+
