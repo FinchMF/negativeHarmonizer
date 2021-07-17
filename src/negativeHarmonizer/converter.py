@@ -6,12 +6,17 @@ def readIn(f: str) -> mido.midifiles.midifiles.MidiFile:
 
 def readOut(midiFile: mido.midifiles.midifiles.MidiFile, f: str):
     """Function to save midifile"""
-    midiFile.save(f"{f}.mid")
+    midiFile.save(f"negatives/{f}.mid")
 
 
 def flip(midiFile: mido.midifiles.midifiles.MidiFile, 
-         outMidi: mido.midifiles.midifiles.MidiFile) -> mido.midifiles.midifiles.MidiFile:
+         outMidi: mido.midifiles.midifiles.MidiFile, notes: int) -> mido.midifiles.midifiles.MidiFile:
     """Function to convert each midi note into its negative counterpart"""
+    # set the type of note data to look at
+    if notes == 1:
+        notes = ['note_on']
+    else:
+        notes = ['note_on', 'note_off']
     # transfer header data
     outMidi.type = midiFile.type
     outMidi.ticks_per_beat = midiFile.ticks_per_beat
@@ -28,7 +33,7 @@ def flip(midiFile: mido.midifiles.midifiles.MidiFile,
                 converter = Negator(key=event.key)
                 newtrack.append(event.copy())
             # convert the pitch, then transfer data
-            if event.type == 'note_on': # 'note_off'
+            if event.type in notes: 
                 prev = event.note
                 converted = converter.convert(midi_n=int(prev))
                 newtrack.append(event.copy( note = converted ))
@@ -42,15 +47,16 @@ def flip(midiFile: mido.midifiles.midifiles.MidiFile,
 
 class ReHarmonizer:
     """Object to reharmonize with Negative Harmony"""
-    def __init__(self, Inf: str, Outf: str):
+    def __init__(self, Inf: str, Outf: str, notes=1):
 
         self.inf = Inf
         self.outf = Outf
+        self.notes = notes
         self.outMid = MidiFile()
         self.convert()
 
     def convert(self):
         """function to convert"""
         midiFile = readIn(f=self.inf)
-        midiFile = flip(midiFile=midiFile, outMidi=self.outMid)
+        midiFile = flip(midiFile=midiFile, outMidi=self.outMid, notes=self.notes)
         readOut(midiFile=midiFile, f=self.outf)
