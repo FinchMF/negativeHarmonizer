@@ -14,28 +14,28 @@ def flip(midiFile: mido.midifiles.midifiles.MidiFile,
     """Function to convert each midi note into its negative counterpart"""
     # set the type of note data to look at
     if notes == 1:
-        notes = ['note_on']
+        notes: list = ['note_on']
     else:
-        notes = ['note_on', 'note_off']
+        notes: list = ['note_on', 'note_off']
     # transfer header data
-    outMidi.type = midiFile.type
-    outMidi.ticks_per_beat = midiFile.ticks_per_beat
-    outMidi.charset = midiFile.charset
+    outMidi.type: str = midiFile.type
+    outMidi.ticks_per_beat: int = midiFile.ticks_per_beat
+    outMidi.charset: str = midiFile.charset
     converter = None
     # iterate through tracks in the midi file
     for track in midiFile.tracks:
         # per track set up the copy
-        newtrack = MidiTrack()
+        newtrack: object = MidiTrack()
         # iteratae through midi messages in track
         for event in track:
             # set converter based on key (this can change through out the peice)
             if event.type == 'key_signature':
-                converter = Negator(key=event.key)
+                converter: object = Negator(key=event.key)
                 newtrack.append(event.copy())
             # convert the pitch, then transfer data
             if event.type in notes: 
-                prev = event.note
-                converted = converter.convert(midi_n=int(prev))
+                prev: int = event.note
+                converted: int = converter.convert(midi_n=int(prev))
                 newtrack.append(event.copy( note = converted ))
                 logger.info(f"{prev} -> {converted}")
             # transfer the rest of the data to make a perfect copy
@@ -49,10 +49,10 @@ class ReHarmonizer:
     """Object to reharmonize with Negative Harmony"""
     def __init__(self, Inf: str, Outf: str, notes=1):
 
-        self.inf = Inf
-        self.outf = Outf
-        self.notes = notes
-        self.outMid = MidiFile()
+        self.inf: str = Inf
+        self.outf: str = Outf
+        self.notes: int = notes
+        self.outMid: object = MidiFile()
         self.convert()
 
     def convert(self):

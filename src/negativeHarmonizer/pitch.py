@@ -92,13 +92,13 @@ class Tones:
     @staticmethod
     def setTones(scale: list, root: str) -> list:
         """Function to order the chromatic scale from the given root"""
-        twelveTone = list(range(12))
-        rootIdx = scale.index(root)
-        rootScale = scale[rootIdx:] + scale[0:rootIdx]
+        twelveTone: list = list(range(12))
+        rootIdx: int = scale.index(root)
+        rootScale: list = scale[rootIdx:] + scale[0:rootIdx]
 
-        rootChroma = {}
+        rootChroma: dict = {}
         for n in range(len(rootScale)):
-            rootChroma[rootScale[n]] = twelveTone[n]
+            rootChroma[rootScale[n]]: int = twelveTone[n]
 
         return rootChroma
 
@@ -115,8 +115,8 @@ class Tones:
     def getNegativeTones(keyTone: dict, 
                         negativeTone: dict = Scales.negativeMap()) -> dict:
         """Function that returns negative mappinig of a scale"""
-        scale = list(keyTone.keys())
-        negative = {}
+        scale: list = list(keyTone.keys())
+        negative: dict = {}
         for pitch, tone in keyTone.items():
             negative[pitch]: str = scale[negativeTone[tone]]
 
@@ -141,9 +141,9 @@ def negativeConversion(midi: int, key: str) -> int:
         logger.info(f" Enharmonic Substitution Needed")
 
         if '#' in pitch:
-            pitch = Scales.chromaticScaleFlat()[Scales.chromaticScaleSharp().index(pitch)]
+            pitch: str = Scales.chromaticScaleFlat()[Scales.chromaticScaleSharp().index(pitch)]
         else:
-            pitch = Scales.chromaticScaleSharp()[Scales.chromaticScaleFlat().index(pitch)]
+            pitch: str = Scales.chromaticScaleSharp()[Scales.chromaticScaleFlat().index(pitch)]
 
         negativePitch: str = f"{negativeTones[pitch]}{octave}"
 
@@ -153,7 +153,7 @@ def negativeConversion(midi: int, key: str) -> int:
 class Negator:
 
     def __init__(self, key: str):
-        self.key = key
+        self.key: str = key
 
     def convert(self, midi_n: int) -> int:
         return negativeConversion(midi=midi_n, key=self.key)
