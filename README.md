@@ -54,7 +54,7 @@ Things to Note:
 
 ### About the Arguements
 #
-The first two arguments are i/o, however the additional two arguments handle how note data us processed and what key the transformative axix is chosen from. 
+The first two arguments are i/o, however the additional two arguments handle how note data is processed and what key the transformative axis is chosen from. 
 
 n is default 1, meaning that the logic only focuses on midi messages indicating note_on, when n is set to 0, the logic will handle both note_on and note_off midi messages. 
 
