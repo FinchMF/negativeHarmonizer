@@ -21,5 +21,7 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
    
-    runNegatives(MIDI=args.i, negMIDI=args.o,
-                 notes=args.n, key=args.k)     
+    runNegatives(MIDI=args.i, 
+                 negMIDI=f"negatives/{args.o}",
+                 notes=args.n, 
+                 key=args.k)     

@@ -36,17 +36,20 @@ The application takes a midi file as input, then converts the entire midi into a
 
 <br/><br/>
 
-### How to Install
+### How to Install From Git
 #
     git clone git@github.com:FinchMF/negativeHarmonizer.git
+    pip3 install -r requirements.txt 
 
 <br/><br/>
 
-### How To Run
+### How To Run if From Git
 #
-Currently this is a command-line tool
+Move into **negativeHarmoinzer** directory, run:
 
     python3.7 src/generateNegatives.py -i{input midi file} -o{output midi file name} -n=1 -k=None
+
+
 
 Things to Note:
 - If your negative output has rhythmic glitches, rerun the command changing -n to 0
@@ -60,3 +63,27 @@ n is default 1, meaning that the logic only focuses on midi messages indicating 
 
 k is default None, meaning that the logic will look for the key in the midi file. If the midi file does not contain data about the key, then the key of C is chosen by default. Setting the key will override what key is in the midi file, as well as override the default C if no key is in the midi file. 
 
+### Use as Python Library
+#
+Currently in beta-testing
+
+    pip install -i https://test.pypi.org/simple/ negativeHarmonizer-FinchMF==0.0.2
+
+ #
+    from negativeHarmonizer import ReHarmonizer
+
+    MIDI = <midiFile.mid>
+    negMIDI = <name of output file>
+
+    ########################
+    # Additional Arguments #
+    ########################
+    notes= < choose 1 or 0 > 
+    # decides whether or not to read 'note_off' data | 0 = ['note_on', 'note_off], 1 = ['note_on'] | default = 1
+
+    key = None
+    # by default ReHarmonizer will find the key in the midi data.
+    # secondly, if the key is note delcared in the midi data, ReHarmonier will default to C Major
+    # use the key argument to choose what key ReHarmonizer pivots the negative off of
+    
+    ReHarmonizer(Inf=MIDI, Outf=negMIDI, notes=notes, key=key)

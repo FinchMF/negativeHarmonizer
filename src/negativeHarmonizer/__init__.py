@@ -1,3 +1,4 @@
+import sys
 import mido
 from mido import ( Message, MidiFile, MidiTrack )
 from math import ( log2, pow ) 

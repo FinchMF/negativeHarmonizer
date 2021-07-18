@@ -6,7 +6,7 @@ def readIn(f: str) -> mido.midifiles.midifiles.MidiFile:
 
 def readOut(midiFile: mido.midifiles.midifiles.MidiFile, f: str):
     """Function to save midifile"""
-    midiFile.save(f"negatives/{f}.mid")
+    midiFile.save(f"{f}.mid")
 
 
 def flip(midiFile: mido.midifiles.midifiles.MidiFile, 
