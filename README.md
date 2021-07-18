@@ -67,7 +67,7 @@ k is default None, meaning that the logic will look for the key in the midi file
 #
 Currently in beta-testing
 
-    pip install -i https://test.pypi.org/simple/ negativeHarmonizer-FinchMF==0.0.2
+    pip install -i https://test.pypi.org/simple/ negativeHarmonizer-FinchMF==0.0.3
 
  #
     from negativeHarmonizer import ReHarmonizer
